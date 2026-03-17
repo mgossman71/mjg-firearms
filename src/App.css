@@ -1,0 +1,230 @@
+/* ─── Base ─────────────────────────────────────────── */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+.app.loaded {
+  opacity: 1;
+}
+
+/* ─── Background layers ─────────────────────────────── */
+
+.bg-gradient {
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 50%, #1c1508 0%, #0d0d0b 65%);
+  z-index: 0;
+}
+
+/* Subtle film grain using SVG turbulence */
+.grain {
+  position: fixed;
+  inset: -200%;
+  width: 400%;
+  height: 400%;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+  opacity: 0.025;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ─── Corner accents ────────────────────────────────── */
+
+.corner {
+  position: fixed;
+  width: 36px;
+  height: 36px;
+  opacity: 0;
+  z-index: 3;
+  transition: opacity 0.6s ease;
+}
+
+.app.loaded .corner {
+  opacity: 0.4;
+}
+
+.corner-tl { top: 2rem; left: 2rem;  border-top: 1px solid #c4922a; border-left: 1px solid #c4922a; }
+.corner-tr { top: 2rem; right: 2rem; border-top: 1px solid #c4922a; border-right: 1px solid #c4922a; }
+.corner-bl { bottom: 2rem; left: 2rem;  border-bottom: 1px solid #c4922a; border-left: 1px solid #c4922a; }
+.corner-br { bottom: 2rem; right: 2rem; border-bottom: 1px solid #c4922a; border-right: 1px solid #c4922a; }
+
+/* ─── Content container ─────────────────────────────── */
+
+.container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 680px;
+  width: 100%;
+}
+
+/* ─── Eyebrow ───────────────────────────────────────── */
+
+.eyebrow {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.6rem;
+  font-weight: 500;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: #c4922a;
+  margin-bottom: 2rem;
+  opacity: 0;
+  transform: translateY(12px);
+  animation: fadeUp 0.7s ease 0.2s forwards;
+}
+
+/* ─── Company name ──────────────────────────────────── */
+
+.company-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1em;
+  opacity: 0;
+  transform: translateY(16px);
+  animation: fadeUp 0.8s ease 0.4s forwards;
+}
+
+.name-mjg {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(4.5rem, 14vw, 8rem);
+  font-weight: 700;
+  color: #f0e6d3;
+  line-height: 1;
+  letter-spacing: 0.12em;
+}
+
+.name-firearms {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(0.75rem, 2.5vw, 1rem);
+  font-weight: 300;
+  letter-spacing: 0.55em;
+  text-transform: uppercase;
+  color: #8a7a68;
+  margin-top: 0.3em;
+}
+
+/* ─── Divider ───────────────────────────────────────── */
+
+.divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem auto;
+  max-width: 320px;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.7s ease 0.6s forwards;
+}
+
+.divider-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c4922a88, transparent);
+  display: block;
+}
+
+.divider-icon {
+  width: 12px;
+  height: 12px;
+  flex-shrink: 0;
+}
+
+/* ─── Tagline ───────────────────────────────────────── */
+
+.tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: #5a5040;
+  margin-bottom: 0;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.7s ease 0.75s forwards;
+}
+
+/* ─── Coming Soon ───────────────────────────────────── */
+
+.coming-soon-block {
+  margin: 3.5rem 0 2.5rem;
+  opacity: 0;
+  transform: translateY(14px);
+  animation: fadeUp 0.8s ease 0.95s forwards;
+}
+
+.coming-soon {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.6rem, 5vw, 2.4rem);
+  font-weight: 400;
+  color: #d4b070;
+  letter-spacing: 0.08em;
+  position: relative;
+  display: inline-block;
+}
+
+/* Animated underline */
+.coming-soon::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, #c4922a, transparent);
+  animation: expandLine 1s ease 1.8s forwards;
+}
+
+/* ─── Description ───────────────────────────────────── */
+
+.description {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.06em;
+  color: #3d3328;
+  opacity: 0;
+  transform: translateY(10px);
+  animation: fadeUp 0.7s ease 1.2s forwards;
+}
+
+/* ─── Animations ────────────────────────────────────── */
+
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes expandLine {
+  to {
+    width: 80%;
+  }
+}
+
+/* ─── Responsive ────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .corner {
+    width: 24px;
+    height: 24px;
+  }
+  .corner-tl, .corner-bl { left: 1.25rem; }
+  .corner-tr, .corner-br { right: 1.25rem; }
+  .corner-tl, .corner-tr { top: 1.25rem; }
+  .corner-bl, .corner-br { bottom: 1.25rem; }
+}
